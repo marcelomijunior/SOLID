@@ -1,7 +1,6 @@
+using Alura.LeilaoOnline.WebApp.Dados.Interfaces;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Alura.LeilaoOnline.WebApp.Dados;
 using Alura.LeilaoOnline.WebApp.Models;
 using System;
 
@@ -9,14 +8,11 @@ namespace Alura.LeilaoOnline.WebApp.Controllers
 {
     public class LeilaoController : Controller
     {
+        readonly ILeilaoDAO _leilaoDao;
 
-        AppDbContext _context;
-        LeilaoDAO _leilaoDao;
-
-        public LeilaoController()
+        public LeilaoController(ILeilaoDAO leilaoDao)
         {
-            _context = new AppDbContext();
-            _leilaoDao = new LeilaoDAO();
+            _leilaoDao = leilaoDao;
         }
 
         public IActionResult Index()
@@ -72,7 +68,7 @@ namespace Alura.LeilaoOnline.WebApp.Controllers
         [HttpPost]
         public IActionResult Inicia(int id)
         {
-            var leilao = _context.Leiloes.Find(id);
+            var leilao = _leilaoDao.BuscarLeilaoPorId(id);
             if (leilao == null) return NotFound();
             if (leilao.Situacao != SituacaoLeilao.Rascunho) return StatusCode(405);
             leilao.Situacao = SituacaoLeilao.Pregao;
