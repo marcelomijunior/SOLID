@@ -10,24 +10,25 @@ namespace Alura.LeilaoOnline.WebApp.Controllers
     public class LeilaoApiController : ControllerBase
     {
         AppDbContext _context;
+        LeilaoDAO _leilaoDAO;
 
         public LeilaoApiController()
         {
             _context = new AppDbContext();
+            _leilaoDAO = new LeilaoDAO();
         }
 
         [HttpGet]
         public IActionResult EndpointGetLeiloes()
         {
-            var leiloes = _context.Leiloes
-                .Include(l => l.Categoria);
+            var leiloes = _leilaoDAO.BuscarLeiloes();
             return Ok(leiloes);
         }
 
         [HttpGet("{id}")]
         public IActionResult EndpointGetLeilaoById(int id)
         {
-            var leilao = _context.Leiloes.Find(id);
+            var leilao = _leilaoDAO.BuscarLeilaoPorId(id);
             if (leilao == null)
             {
                 return NotFound();
@@ -38,29 +39,26 @@ namespace Alura.LeilaoOnline.WebApp.Controllers
         [HttpPost]
         public IActionResult EndpointPostLeilao(Leilao leilao)
         {
-            _context.Leiloes.Add(leilao);
-            _context.SaveChanges();
+            _leilaoDAO.CriarLeilao(leilao);
             return Ok(leilao);
         }
 
         [HttpPut]
         public IActionResult EndpointPutLeilao(Leilao leilao)
         {
-            _context.Leiloes.Update(leilao);
-            _context.SaveChanges();
+            _leilaoDAO.AtualizarLeilao(leilao);
             return Ok(leilao);
         }
 
         [HttpDelete("{id}")]
         public IActionResult EndpointDeleteLeilao(int id)
         {
-            var leilao = _context.Leiloes.Find(id);
+            var leilao = _leilaoDAO.BuscarLeilaoPorId(id);
             if (leilao == null)
             {
                 return NotFound();
             }
-            _context.Leiloes.Remove(leilao);
-            _context.SaveChanges();
+            _leilaoDAO.ExcluirLeilao(leilao);
             return NoContent();
         }
 
