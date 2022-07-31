@@ -18,6 +18,8 @@ namespace Alura.LeilaoOnline.WebApp.Dados
 
         public IEnumerable<Leilao> BuscarLeiloes() => _context.Leiloes.Include(x => x.Categoria).ToList();
 
+        public IEnumerable<Categoria> BuscarCategorias() => _context.Categorias.ToList();
+
         public void CriarLeilao(Leilao leilao)
         {
             _context.Leiloes.Add(leilao);

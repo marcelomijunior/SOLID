@@ -28,7 +28,7 @@ namespace Alura.LeilaoOnline.WebApp.Controllers
         [HttpGet]
         public IActionResult Insert()
         {
-            ViewData["Categorias"] = _context.Categorias.ToList();
+            ViewData["Categorias"] = _leilaoDao.BuscarCategorias();
             ViewData["Operacao"] = "Inclusão";
             return View("Form");
         }
@@ -41,7 +41,7 @@ namespace Alura.LeilaoOnline.WebApp.Controllers
                 _leilaoDao.CriarLeilao(model);
                 return RedirectToAction("Index");
             }
-            ViewData["Categorias"] = _context.Categorias.ToList();
+            ViewData["Categorias"] = _leilaoDao.BuscarCategorias();
             ViewData["Operacao"] = "Inclusão";
             return View("Form", model);
         }
@@ -49,7 +49,7 @@ namespace Alura.LeilaoOnline.WebApp.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            ViewData["Categorias"] = _context.Categorias.ToList();
+            ViewData["Categorias"] = _leilaoDao.BuscarCategorias();
             ViewData["Operacao"] = "Edição";
             var leilao = _leilaoDao.BuscarLeilaoPorId(id);
             if (leilao == null) return NotFound();
@@ -64,7 +64,7 @@ namespace Alura.LeilaoOnline.WebApp.Controllers
                 _leilaoDao.AtualizarLeilao(model);
                 return RedirectToAction("Index");
             }
-            ViewData["Categorias"] = _context.Categorias.ToList();
+            ViewData["Categorias"] = _leilaoDao.BuscarCategorias();
             ViewData["Operacao"] = "Edição";
             return View("Form", model);
         }
