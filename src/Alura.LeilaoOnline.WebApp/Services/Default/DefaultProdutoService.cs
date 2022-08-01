@@ -17,10 +17,10 @@ namespace Alura.LeilaoOnline.WebApp.Services.Default
             _categoriaDAO = categoriaDAO;
         }
 
-        public Categoria BuscarCategoriaPorIdComLeiloes(int id) => _categoriaDAO.BuscarCategoriaPorIdComLeiloes(id);
+        public Categoria BuscarCategoriaPorIdComLeiloes(int id) => _categoriaDAO.ConsultarPorId(id);
 
         public IEnumerable<Categoria> BuscarCategoriasComTotaisDosLeiloes()
-            => _categoriaDAO.BuscarCategoriasComLeiloes()
+            => _categoriaDAO.ConsultarTodos()
                 .Select(c => new CategoriaComInfoLeilao
                 {
                     Id = c.Id,
@@ -31,7 +31,7 @@ namespace Alura.LeilaoOnline.WebApp.Services.Default
                     Finalizados = c.Leiloes.Where(l => l.Situacao == SituacaoLeilao.Finalizado).Count(),
                 });
 
-        public IEnumerable<Leilao> BuscarLeiloesPorTermo(string termo) => _leilaoDAO.BuscarLeiloes().Where(c => c.Titulo.ToUpper().Contains(termo.ToUpper()) || c.Descricao.ToUpper().Contains(termo.ToUpper()) || c.Categoria.Descricao.ToUpper().Contains(termo.ToUpper()));
+        public IEnumerable<Leilao> BuscarLeiloesPorTermo(string termo) => _leilaoDAO.ConsultarTodos().Where(c => c.Titulo.ToUpper().Contains(termo.ToUpper()) || c.Descricao.ToUpper().Contains(termo.ToUpper()) || c.Categoria.Descricao.ToUpper().Contains(termo.ToUpper()));
 
     }
 }

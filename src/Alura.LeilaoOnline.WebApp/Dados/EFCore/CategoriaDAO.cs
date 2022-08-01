@@ -8,15 +8,15 @@ namespace Alura.LeilaoOnline.WebApp.Dados.EFCore
 {
     public class CategoriaDAO : ICategoriaDAO
     {
-        readonly AppDbContext _context;
+        private readonly AppDbContext _context;
 
         public CategoriaDAO(AppDbContext context)
         {
             _context = context;
         }
 
-        public Categoria BuscarCategoriaPorIdComLeiloes(int id) => _context.Categorias.Where(x => x.Id == id).Include(x => x.Leiloes).FirstOrDefault();
+        public Categoria ConsultarPorId(int id) => _context.Categorias.Where(x => x.Id == id).Include(x => x.Leiloes).FirstOrDefault();
 
-        public IEnumerable<Categoria> BuscarCategoriasComLeiloes() => _context.Categorias.Include(x => x.Leiloes).ToList();
+        public IEnumerable<Categoria> ConsultarTodos() => _context.Categorias.Include(x => x.Leiloes).ToList();
     }
 }

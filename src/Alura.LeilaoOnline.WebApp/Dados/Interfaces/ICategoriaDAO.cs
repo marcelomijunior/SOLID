@@ -3,9 +3,7 @@ using System.Collections.Generic;
 
 namespace Alura.LeilaoOnline.WebApp.Dados.Interfaces
 {
-    public interface ICategoriaDAO
+    public interface ICategoriaDAO : IQueryDAO<Categoria>
     {
-        IEnumerable<Categoria> BuscarCategoriasComLeiloes();
-        Categoria BuscarCategoriaPorIdComLeiloes(int id);
     }
 }

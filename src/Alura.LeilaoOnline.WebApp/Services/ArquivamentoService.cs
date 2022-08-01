@@ -10,9 +10,9 @@ namespace Alura.LeilaoOnline.WebApp.Services
     {
         readonly IAdminService _adminService;
 
-        public ArquivamentoService(ILeilaoDAO leilaoDAO)
+        public ArquivamentoService(ILeilaoDAO leilaoDAO, ICategoriaDAO categoriaDAO)
         {
-            _adminService = new DefaultAdminService(leilaoDAO);
+            _adminService = new DefaultAdminService(leilaoDAO, categoriaDAO);
         }
 
         public void AtualizarLeilao(Leilao leilao) => _adminService.AtualizarLeilao(leilao);
