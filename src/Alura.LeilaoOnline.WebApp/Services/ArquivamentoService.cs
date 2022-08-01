@@ -43,7 +43,11 @@ namespace Alura.LeilaoOnline.WebApp.Services
 
         public void RemoverLeilao(Leilao leilao)
         {
-            _adminService.RemoverLeilao(leilao);
+            if (leilao != null && leilao.Situacao != SituacaoLeilao.Pregao)
+            {
+                leilao.Situacao = SituacaoLeilao.Arquivado;
+                _adminService.AtualizarLeilao(leilao);
+            }
         }
     }
 }
